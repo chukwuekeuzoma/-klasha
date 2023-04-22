@@ -1,40 +1,41 @@
-// These icons should be arranged alphabetically for easy sorting
 import styled from "styled-components";
-import DashBoardIcon from "../../assets/svgs/pie-chart.svg";
-import BalanceIcon from "../../assets/svgs/wallet.svg";
-import TransactionIcon from "../../assets/svgs/Group735.svg";
-import AnalyticsIcon from "../../assets/svgs/Group733.svg";
-import MarketingIcon from "../../assets/svgs/radar.svg";
-import ExchangeRatesIcon from "../../assets/svgs/Group699.svg";
-import CheckoutIcon from "../../assets/svgs/shoppingcart.svg";
-import PaymentLinksIcon from "../../assets/svgs/paymentlink.svg";
-import WireIcon from "../../assets/svgs/transactions.svg";
-import SupportIcon from "../../assets/svgs/Support.svg";
-import ArrowLeftIcon from "../../assets/svgs/ArrowLeft.svg";
-import DropDownIcon from "../../assets/svgs/dropdown.svg";
-import ProfileIcon from "../../assets/svgs/profile.svg";
-import ArrowDownIcon from "../../assets/svgs/Arrowdown.svg";
-import SearchIcon from "../../assets/svgs/Search.svg";
-import FliterIcon from "../../assets/svgs/Fliter.svg"
+import {
+  ArrowDown,
+  Piechart,
+  Arrowleft,
+  Group733,
+  Wallet,
+  DropDown,
+  Fliter,
+  Group699,
+  Group735,
+  Paymentlink,
+  Profile,
+  Radar,
+  Search,
+  Shoppingcart,
+  Support,
+  Transactions,
+} from "../../assets/svgs";
 
 // These icons should be arranged alphabetically for easy sorting
 const icons = {
-  DashBoardIcon: <DashBoardIcon/>,
-  BalanceIcon:<BalanceIcon />,
-  TransactionIcon:<TransactionIcon />,
-  AnalyticsIcon:<AnalyticsIcon />, 
-  MarketingIcon:<MarketingIcon/>,
-  ExchangeRatesIcon:<ExchangeRatesIcon/>,
-  CheckoutIcon:<CheckoutIcon/>,
-  PaymentLinksIcon:<PaymentLinksIcon/>,
-  WireIcon:<WireIcon/>,
-  SupportIcon:<SupportIcon/>,
-  ArrowLeftIcon:<ArrowLeftIcon/>,
-  DropDownIcon:<DropDownIcon/>,
-  ProfileIcon:<ProfileIcon/>,
-  ArrowDownIcon:<ArrowDownIcon/>,
-  SearchIcon:<SearchIcon/>,
-  FliterIcon:<FliterIcon/>
+  Arrowlefticon: <Arrowleft />,
+  ArrowDownIcon: <ArrowDown />,
+  AnalyticsIcon: <Group733 />,
+  BalanceIcon: <Wallet />,
+  CheckoutIcon: <Shoppingcart />,
+  DashBoardIcon: <Piechart />,
+  DropDownIcon: <DropDown />,
+  ExchangeRatesIcon: <Group699 />,
+  FliterIcon: <Fliter />,
+  MarketingIcon: <Radar />,
+  PaymentLinksIcon: <Paymentlink />,
+  ProfileIcon: <Profile />,
+  SupportIcon: <Support />,
+  SearchIcon: <Search />,
+  TransactionIcon: <Group735 />,
+  WireIcon: <Transactions />,
 };
 
 export type Icons = keyof typeof icons;
@@ -42,15 +43,16 @@ export type Icons = keyof typeof icons;
 interface Props {
   /** Name of the icon as stored in the icons object */
   icon: Icons;
-  size?: string;
+  size?: number;
 }
 
-export default function UiIcon({ icon, size = "16" }: Props) {
+export default function UiIcon({ icon, size = 16 }: Props) {
   return <IconStyle size={size}>{icons[icon]}</IconStyle>;
 }
 
 const IconStyle = styled.span`
-  font-size: ${({ size }: { size?: Props["size"] }) =>
-    pxToRem((size && parseInt(size)) || 16)};
+  svg {
+    height: ${({ size }: { size: number }) => size}px;
+    width: ${({ size }: { size: number }) => size}px;
+  }
 `;
-
