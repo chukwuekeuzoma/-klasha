@@ -14,6 +14,7 @@ import Search from "./Search";
 import Shoppingcart from "./Shoppingcart";
 import Support from "./Support";
 import Transactions from "./Transactions";
+import KlashalogoCheck from "./KlashalogoCheck"
 
 export{
     ArrowDown,
@@ -31,5 +32,6 @@ export{
     Search,
     Shoppingcart,
     Support,
-    Transactions
+    Transactions,
+    KlashalogoCheck
 }

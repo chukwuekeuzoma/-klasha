@@ -11,7 +11,6 @@ export default function Support() {
         cx="12"
         cy="12"
         r="10"
-        stroke="white"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"

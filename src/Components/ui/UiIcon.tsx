@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { List, X, Question } from "phosphor-react";
+
 import {
   ArrowDown,
   Piechart,
@@ -14,8 +16,8 @@ import {
   Radar,
   Search,
   Shoppingcart,
-  Support,
   Transactions,
+  KlashalogoCheck,
 } from "../../assets/svgs";
 
 // These icons should be arranged alphabetically for easy sorting
@@ -29,13 +31,16 @@ const icons = {
   DropDownIcon: <DropDown />,
   ExchangeRatesIcon: <Group699 />,
   FliterIcon: <Fliter />,
+  Klasha: <KlashalogoCheck />,
+  List: <List />,
   MarketingIcon: <Radar />,
   PaymentLinksIcon: <Paymentlink />,
   ProfileIcon: <Profile />,
-  SupportIcon: <Support />,
+  SupportIcon: <Question />,
   SearchIcon: <Search />,
   TransactionIcon: <Group735 />,
   WireIcon: <Transactions />,
+  X: <X />,
 };
 
 export type Icons = keyof typeof icons;
@@ -46,11 +51,12 @@ interface Props {
   size?: number;
 }
 
-export default function UiIcon({ icon, size = 16 }: Props) {
+export default function UiIcon({ icon, size = 18 }: Props) {
   return <IconStyle size={size}>{icons[icon]}</IconStyle>;
 }
 
 const IconStyle = styled.span`
+  font-size: ${({ size }: { size: number }) => size}px;
   svg {
     height: ${({ size }: { size: number }) => size}px;
     width: ${({ size }: { size: number }) => size}px;
