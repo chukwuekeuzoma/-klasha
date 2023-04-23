@@ -6,7 +6,7 @@ const PageError = lazy(() => import("../Components/Errors/PageError"));
 // LAYOUTS
 const DashBoardLayout = lazy(() => import("../Layouts/DashBoardLayout"));
 
-//DashBoard
+//DASHBOARD
 
 const SalesOverView = lazy(() => import("../Pages/SalesOverview"));
 const TransactionHistory = lazy(() => import("../Pages/Transactionhistory"));

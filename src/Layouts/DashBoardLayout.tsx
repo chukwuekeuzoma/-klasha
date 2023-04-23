@@ -5,18 +5,18 @@ import DashbordSideBar from "../Components/Layout/DashbordSideBar";
 import { Outlet } from "react-router-dom";
 
 export default function DashBoardLayout() {
-  const [toogleHumbuger, setToogleHambuger] = useState<boolean>(false);
+  const [menuIsVisible, setMenuIsVisible] = useState<boolean>(false);
 
   return (
     <Layout>
       <DashbordSideBar
-        toogleHumbuger={toogleHumbuger}
-        ClosetoogleHumbugerFunc={setToogleHambuger}
+        menuIsVisible={menuIsVisible}
+        toggleMenu={setMenuIsVisible}
       />
       <Body>
         <DashBoardTopNav
-          toogleHumbuger={toogleHumbuger}
-          toogleHumbugerFunc={setToogleHambuger}
+          menuIsVisible={menuIsVisible}
+          toggleMenu={setMenuIsVisible}
         />
         <div className="body-inner">
           <Outlet />
@@ -39,10 +39,10 @@ const Layout = styled.div`
 const Body = styled.div`
   position: relative;
   overflow-x: auto;
-  overflow-y: scroll;
   width: 100%;
   border-top: none;
   position: static;
+  overflow-y: scroll;
 
   .body-inner {
     margin-left: 20px;

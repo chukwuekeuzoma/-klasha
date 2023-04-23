@@ -11,14 +11,11 @@ interface Route {
 }
 
 interface Props {
-  toogleHumbuger: boolean;
-  ClosetoogleHumbugerFunc: React.Dispatch<React.SetStateAction<boolean>>;
+  menuIsVisible: boolean;
+  toggleMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function DashbordSideBar({
-  toogleHumbuger,
-  ClosetoogleHumbugerFunc,
-}: Props) {
+export default function DashbordSideBar({ menuIsVisible, toggleMenu }: Props) {
   const mainPages: Route[] = [
     {
       path: "/",
@@ -80,29 +77,29 @@ export default function DashbordSideBar({
     return appLocation.pathname.includes(route);
   }
 
-  const closeToogle = () => {
-    ClosetoogleHumbugerFunc(false);
+  const closeMenu = () => {
+    toggleMenu(false);
   };
 
   return (
-    <Overlay toogleHumbuger={toogleHumbuger}>
-      {toogleHumbuger && (
+    <Overlay menuIsVisible={menuIsVisible}>
+      {menuIsVisible && (
         <div className="mobile-X">
-          <UiIcon icon="X" size={30} onClick={closeToogle} />
+          <UiIcon icon="X" size={30} onClick={closeMenu} />
         </div>
       )}
-      <OutsideClickHandler onOutsideClick={closeToogle}>
-        <Sidebar toogleHumbuger={toogleHumbuger}>
+      <OutsideClickHandler onOutsideClick={closeMenu}>
+        <Sidebar menuIsVisible={menuIsVisible}>
           <LogoContainer>
             <UiIcon size={83.98} icon="Klasha" />
           </LogoContainer>
-          <div className="sidebar_inner">
+          <div className="sidebar-inner">
             <SubTitle>Main pages</SubTitle>
             {mainPages.map((route, index) => (
               <Link to={route.path} key={index} className="links">
                 <Tab isActive={isRouteActive(route.path)}>
                   <UiIcon icon={route.iconName} />
-                  <div className="tablist_text">{route.name}</div>
+                  <div className="tab-text">{route.name}</div>
                 </Tab>
               </Link>
             ))}
@@ -111,7 +108,7 @@ export default function DashbordSideBar({
               <Link to={route.path} key={index} className="links">
                 <Tab isActive={isRouteActive(route.path)}>
                   <UiIcon icon={route.iconName} />
-                  <div className="tablist_text">{route.name}</div>
+                  <div className="tab-text">{route.name}</div>
                 </Tab>
               </Link>
             ))}
@@ -120,10 +117,11 @@ export default function DashbordSideBar({
               <Link to={route.path} key={index} className="links">
                 <Tab isActive={isRouteActive(route.path)}>
                   <UiIcon icon={route.iconName} />
-                  <div className="tablist_text">{route.name}</div>
+                  <div className="tab-text">{route.name}</div>
                 </Tab>
               </Link>
             ))}
+            <br/>
             <Support>
               <UiIcon icon="SupportIcon" size={20} />
               <span>Support</span>
@@ -141,58 +139,38 @@ export default function DashbordSideBar({
 
 const Sidebar = styled.nav`
   background: var(--color-primary-250);
-  position: static;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  top: 0;
   width: 280px;
   transition: 0.5s;
-  height: 100%;
+  min-height: 100%;
+  height: 100vw;
 
-  .sidebar_inner {
+  .sidebar-inner {
+    position: relative;
     display: flex;
     gap: 5px;
     justify-content: flex-start;
     flex-direction: column;
-    position: relative;
     height: 100%;
     margin-left: 19.36%;
   }
 
   @media only screen and (max-width: 1200px) {
-    ${({ toogleHumbuger }: { toogleHumbuger: boolean }) =>
-      toogleHumbuger
-        ? `
-    background: var(--color-primary-250);
-    position:fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    top: 0;
-    width: 280px;
-    transition: 0.5s;
-    z-index: 2;
-      `
-        : `
-    background: var(--color-primary-250);
     position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
     top: 0;
-    width: 280px;
-    margin-left: -400px;
     transition: 0.5s;
     z-index: 2;
-  `}
+    ${({ menuIsVisible }: { menuIsVisible: boolean }) =>
+      menuIsVisible ? `` : `display:none`}
   }
 `;
 
 const Overlay = styled.div`
   @media only screen and (max-width: 1200px) {
-    ${({ toogleHumbuger }: { toogleHumbuger: boolean }) =>
-      toogleHumbuger
+    ${({ menuIsVisible }: { menuIsVisible: boolean }) =>
+      menuIsVisible
         ? `
   position: fixed;
   top: 0;
@@ -229,7 +207,7 @@ const LogoContainer = styled.div`
 
 const SubTitle = styled.div`
   color: var(--color-primary-150);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   margin-bottom: 15px;
 `;
@@ -261,7 +239,7 @@ const Tab = styled.div`
     fill: var(--color-primary-100);`}
   }
 
-  .tablist_text {
+  .tab-text {
     ${({ isActive }: { isActive: boolean }) =>
       isActive
         ? `color: var(--color-primary-200);

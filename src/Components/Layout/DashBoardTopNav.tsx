@@ -3,24 +3,24 @@ import styled from "styled-components";
 import UiIcon from "../UI/UiIcon";
 
 interface Props {
-  toogleHumbuger: boolean;
-  toogleHumbugerFunc: React.Dispatch<React.SetStateAction<boolean>>;
+  menuIsVisible: boolean;
+  toggleMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function DashBoardTopNav({
-  toogleHumbuger,
-  toogleHumbugerFunc,
+  menuIsVisible,
+  toggleMenu,
 }: Props) {
   return (
     <TopNav>
-      <div className="list_class">
+      <div className="list">
         <UiIcon
           icon="List"
           size={30}
-          onClick={() => toogleHumbugerFunc(!toogleHumbuger)}
+          onClick={() => toggleMenu(!menuIsVisible)}
         />
       </div>
-      <div className="topnav_inner">
+      <div className="top-nav-inner">
         <div className="iconstyle">
           <UiIcon icon="ProfileIcon" size={25} />
           <UiIcon icon="ArrowDownIcon" />
@@ -42,7 +42,7 @@ const TopNav = styled.nav`
   align-items: center;
   justify-content: flex-end;
 
-  .topnav_inner {
+  .top-nav-inner {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -60,7 +60,7 @@ const TopNav = styled.nav`
     font-size: 12px;
   }
 
-  .list_class {
+  .list {
     display: none;
 
     @media only screen and (max-width: 1200px) {
