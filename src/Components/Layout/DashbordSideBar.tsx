@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import UiIcon, { Icons } from "../UI/UiIcon";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import OutsideClickHandler from "react-outside-click-handler";
 
 interface Route {
@@ -22,7 +22,7 @@ export default function DashbordSideBar({
   const mainPages: Route[] = [
     {
       path: "/",
-      name: "dashboard",
+      name: "Dashboard",
       iconName: "DashBoardIcon",
     },
     {
@@ -73,14 +73,12 @@ export default function DashbordSideBar({
     },
   ];
 
-  //   const navigate = useNavigate();
-  //   const appLocation = useLocation();
+  const appLocation = useLocation();
 
-  //   function isRouteActive(route: string) {
-  //     if (route === "/") return route === appLocation.pathname;
-
-  //     return appLocation.pathname.includes(route);
-  //   }
+  function isRouteActive(route: string) {
+    if (route === "/") return route === appLocation.pathname;
+    return appLocation.pathname.includes(route);
+  }
 
   const closeToogle = () => {
     ClosetoogleHumbugerFunc(false);
@@ -101,24 +99,30 @@ export default function DashbordSideBar({
           <div className="sidebar_inner">
             <SubTitle>Main pages</SubTitle>
             {mainPages.map((route, index) => (
-              <Tab key={index}>
-                <UiIcon icon={route.iconName} />
-                <div className="tablist_text">{route.name}</div>
-              </Tab>
+              <Link to={route.path} key={index} className="links">
+                <Tab isActive={isRouteActive(route.path)}>
+                  <UiIcon icon={route.iconName} />
+                  <div className="tablist_text">{route.name}</div>
+                </Tab>
+              </Link>
             ))}
             <SubTitle>Accept payments</SubTitle>
             {Acceptpayments.map((route, index) => (
-              <Tab key={index}>
-                <UiIcon icon={route.iconName} />
-                <div className="tablist_text">{route.name}</div>
-              </Tab>
+              <Link to={route.path} key={index} className="links">
+                <Tab isActive={isRouteActive(route.path)}>
+                  <UiIcon icon={route.iconName} />
+                  <div className="tablist_text">{route.name}</div>
+                </Tab>
+              </Link>
             ))}
             <SubTitle>Send payments</SubTitle>
             {Sendpayments.map((route, index) => (
-              <Tab key={index}>
-                <UiIcon icon={route.iconName} />
-                <div className="tablist_text">{route.name}</div>
-              </Tab>
+              <Link to={route.path} key={index} className="links">
+                <Tab isActive={isRouteActive(route.path)}>
+                  <UiIcon icon={route.iconName} />
+                  <div className="tablist_text">{route.name}</div>
+                </Tab>
+              </Link>
             ))}
             <Support>
               <UiIcon icon="SupportIcon" size={20} />
@@ -249,14 +253,23 @@ const Tab = styled.div`
   }
 
   svg {
-    stroke: var(--color-primary-100);
-    fill: var(--color-primary-100);
+    ${({ isActive }: { isActive: boolean }) =>
+      isActive
+        ? `stroke: var(--color-primary-200);
+      fill: var(--color-primary-200);`
+        : `stroke: var(--color-primary-100);
+    fill: var(--color-primary-100);`}
   }
 
   .tablist_text {
-    color: var(--color-primary-100);
+    ${({ isActive }: { isActive: boolean }) =>
+      isActive
+        ? `color: var(--color-primary-200);
+      font-size: 16px;
+      margin-left: 10px;`
+        : `color: var(--color-primary-100);
     font-size: 16px;
-    margin-left: 10px;
+    margin-left: 10px;`}
   }
 `;
 

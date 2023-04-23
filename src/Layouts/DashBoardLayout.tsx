@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import DashBoardTopNav from "../Components/Layout/DashBoardTopNav";
 import DashbordSideBar from "../Components/Layout/DashbordSideBar";
+import { Outlet } from "react-router-dom";
 
 export default function DashBoardLayout() {
   const [toogleHumbuger, setToogleHambuger] = useState<boolean>(false);
@@ -17,7 +18,9 @@ export default function DashBoardLayout() {
           toogleHumbuger={toogleHumbuger}
           toogleHumbugerFunc={setToogleHambuger}
         />
-        <div className="body-inner">ok ok</div>
+        <div className="body-inner">
+          <Outlet />
+        </div>
       </Body>
     </Layout>
   );

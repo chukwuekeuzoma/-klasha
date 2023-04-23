@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRouteError } from 'react-router-dom';
+import React from "react";
+import { useRouteError } from "react-router-dom";
 
 interface ComponentError {
   data?: string;
@@ -18,7 +18,10 @@ const ErrorPage: React.FC<Props> = ({ error }) => {
   return (
     <div id="error-page">
       <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
+      <p>
+        Sorry, an unexpected error has occurred or the link still under
+        maintainace Check out Dashboard and Transaction page .
+      </p>
       <p>
         <i>
           {error.status} {error.statusText}

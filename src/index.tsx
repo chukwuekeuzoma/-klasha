@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import router from "./routes"
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './variables.css';
 
@@ -10,7 +11,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+     <Suspense fallback={<div>Loading.....</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
   </React.StrictMode>
 );
 
