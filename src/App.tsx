@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import UiIcon from "./Components/UI/UiIcon";
 import DashbordSideBar from "./Components/Layout/DashbordSideBar";
+import DashBoardLayout from "./Layouts/DashBoardLayout";
 
 export default function App() {
   return (
-    <DashbordSideBar/>
+    <DashBoardLayout/>
+    // <DashbordSideBar/>
     // <Container>
     //   <UiIcon icon="DashBoardIcon" size={50} />
     // </Container>

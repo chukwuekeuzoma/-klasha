@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import UiIcon, { Icons } from "../UI/UiIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import OutsideClickHandler from "react-outside-click-handler";
 
 interface Route {
   iconName: Icons;
@@ -9,7 +10,15 @@ interface Route {
   name: string;
 }
 
-export default function DashbordSideBar() {
+interface Props {
+  toogleHumbuger: boolean;
+  ClosetoogleHumbugerFunc: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function DashbordSideBar({
+  toogleHumbuger,
+  ClosetoogleHumbugerFunc,
+}: Props) {
   const mainPages: Route[] = [
     {
       path: "/",
@@ -73,75 +82,145 @@ export default function DashbordSideBar() {
   //     return appLocation.pathname.includes(route);
   //   }
 
+  const closeToogle = () => {
+    ClosetoogleHumbugerFunc(false);
+  };
+
   return (
-    <Sidebar>
-      <LogoContainer>
-        <UiIcon size={83.98} icon="Klasha" />
-      </LogoContainer>
-      <div className="sidebar_inner">
-        <SubTitle>Main pages</SubTitle>
-        {mainPages.map((route, index) => (
-          <Tab key={index}>
-            <UiIcon icon={route.iconName} />
-            <div className="tablist_text">{route.name}</div>
-          </Tab>
-        ))}
-        <br />
-        <SubTitle>Accept payments</SubTitle>
-        {Acceptpayments.map((route, index) => (
-          <Tab key={index}>
-            <UiIcon icon={route.iconName} />
-            <div className="tablist_text">{route.name}</div>
-          </Tab>
-        ))}
-        <br />
-        <SubTitle>Send payments</SubTitle>
-        {Sendpayments.map((route, index) => (
-          <Tab key={index}>
-            <UiIcon  icon={route.iconName} />
-            <div className="tablist_text">{route.name}</div>
-          </Tab>
-        ))}
-        <br />
-        <Support>
-          <UiIcon icon="SupportIcon" size={20}/>
-          <span>Support</span>
-        </Support>
-        <br/>
-        <HidePanel>
-           <UiIcon icon="Arrowlefticon" size={20}/>
-           <span>Hide Panel</span>
-        </HidePanel>
-      </div>
-    </Sidebar>
+    <Overlay toogleHumbuger={toogleHumbuger}>
+      {toogleHumbuger && (
+        <div className="mobile-X">
+          <UiIcon icon="X" size={30} onClick={closeToogle} />
+        </div>
+      )}
+      <OutsideClickHandler onOutsideClick={closeToogle}>
+        <Sidebar toogleHumbuger={toogleHumbuger}>
+          <LogoContainer>
+            <UiIcon size={83.98} icon="Klasha" />
+          </LogoContainer>
+          <div className="sidebar_inner">
+            <SubTitle>Main pages</SubTitle>
+            {mainPages.map((route, index) => (
+              <Tab key={index}>
+                <UiIcon icon={route.iconName} />
+                <div className="tablist_text">{route.name}</div>
+              </Tab>
+            ))}
+            <SubTitle>Accept payments</SubTitle>
+            {Acceptpayments.map((route, index) => (
+              <Tab key={index}>
+                <UiIcon icon={route.iconName} />
+                <div className="tablist_text">{route.name}</div>
+              </Tab>
+            ))}
+            <SubTitle>Send payments</SubTitle>
+            {Sendpayments.map((route, index) => (
+              <Tab key={index}>
+                <UiIcon icon={route.iconName} />
+                <div className="tablist_text">{route.name}</div>
+              </Tab>
+            ))}
+            <Support>
+              <UiIcon icon="SupportIcon" size={20} />
+              <span>Support</span>
+            </Support>
+            <HidePanel>
+              <UiIcon icon="Arrowlefticon" size={20} />
+              <span>Hide Panel</span>
+            </HidePanel>
+          </div>
+        </Sidebar>
+      </OutsideClickHandler>
+    </Overlay>
   );
 }
 
 const Sidebar = styled.nav`
   background: var(--color-primary-250);
-  position: fixed;
+  position: static;
   bottom: 0;
   right: 0;
   left: 0;
   top: 0;
-  max-width: 256px;
-  width: 20vw;
+  width: 280px;
+  transition: 0.5s;
+  height: 100%;
 
   .sidebar_inner {
     display: flex;
+    gap: 5px;
     justify-content: flex-start;
     flex-direction: column;
     position: relative;
     height: 100%;
-    width: 100%;
-    margin-left: 50px;
+    margin-left: 19.36%;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    ${({ toogleHumbuger }: { toogleHumbuger: boolean }) =>
+      toogleHumbuger
+        ? `
+    background: var(--color-primary-250);
+    position:fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    width: 280px;
+    transition: 0.5s;
+    z-index: 2;
+      `
+        : `
+    background: var(--color-primary-250);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    width: 280px;
+    margin-left: -400px;
+    transition: 0.5s;
+    z-index: 2;
+  `}
+  }
+`;
+
+const Overlay = styled.div`
+  @media only screen and (max-width: 1200px) {
+    ${({ toogleHumbuger }: { toogleHumbuger: boolean }) =>
+      toogleHumbuger
+        ? `
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  transition: 0.5s;
+      `
+        : `
+    transition: 0.5s;
+  `}
+  }
+
+  .mobile-X {
+    position: absolute;
+    z-index: 1;
+    color: var(--color-primary-100);
+    right: 0;
+    top: 0;
+    margin-right: 20px;
+    margin-top: 80px;
+    transition: 0.5s;
   }
 `;
 
 const LogoContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  margin-left: 50px;
+  margin-left: 19.36%;
 `;
 
 const SubTitle = styled.div`
@@ -190,9 +269,8 @@ const Support = styled.div`
   border-radius: 20px;
   text-align: center;
   background: var(--color-primary-200);
-  color: var(--colot-primary-300);
+  color: var(--color-primary-300);
   cursor: pointer;
-
 
   span {
     display: block;
@@ -206,14 +284,15 @@ const HidePanel = styled.div`
   justify-content: space-evenly;
   padding: 5px;
   width: 100px;
-  border:1px solid var(--color-primary-50);
+  border: 1px solid var(--color-primary-50);
   border-radius: 10px;
   text-align: center;
   background: var(--color-primary-300);
-  color: var(--colot-primary-50);
+  color: var(--color-primary-50);
+  margin-top: 10px;
   cursor: pointer;
 
-  svg{
+  svg {
     stroke: var(--color-primary-50);
     fill: var(--color-primary-50);
   }
@@ -222,4 +301,4 @@ const HidePanel = styled.div`
     display: block;
     font-size: 12px;
   }
-`
+`;
