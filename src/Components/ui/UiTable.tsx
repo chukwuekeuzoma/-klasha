@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useMemo } from "react";
-import UiFilterDropDown from "./UiFilterDropDown";
+import UiDropDown from "./UiDropDown";
 import styled from "styled-components";
-import { Option } from "./UiFilterDropDown";
+import { Option } from "./UiDropDown";
 import UiIcon from "./UiIcon";
-import TransactionHistoryData from "../../types/TransactionHistoryData";
+import ReactPaginate from "react-paginate";
 
 interface Header {
   title: string;
@@ -15,7 +16,7 @@ interface Row extends Record<string, any> {
 }
 
 interface Props {
-  tableTitle?: string;
+  tableTitle: string;
   data: Row[];
   headers: Header[];
   filterOptions?: Option[];
@@ -33,21 +34,24 @@ export default function UiTable({
 }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [status, setStatus] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [postPerPage] = useState(4);
+
+  const paginatedData = useMemo(() => {
+    const start = currentPage * postPerPage;
+    return data.slice(start, start + postPerPage);
+  }, [currentPage, status]);
+
+  const Paginate = ({ selected }: any) => setCurrentPage(selected);
 
   const filteredData = useMemo(() => {
-    if (!status) return data;
-    return data?.filter((data) => data.status === status);
-  }, [status, data]);
-
-  const useFilterdData = useMemo(() => {
-    return filteredData?.map((data: TransactionHistoryData) => ({
-      ...data,
-    }));
-  }, [filteredData]);
+    if (!status) return paginatedData;
+    return paginatedData?.filter((data) => data.status === status);
+  }, [status, paginatedData, currentPage]);
 
   const sortedData = useMemo(() => {
-    if (!isSearchable && !searchTerm && !fieldsToSearch) return useFilterdData;
-    return useFilterdData.filter((item) => {
+    if (!isSearchable && !searchTerm && !fieldsToSearch) return filteredData;
+    return filteredData.filter((item) => {
       return fieldsToSearch?.some((key) => {
         const value = item[key];
         if (typeof value === "string")
@@ -55,12 +59,7 @@ export default function UiTable({
         return false;
       });
     });
-  }, [data, searchTerm]);
-
-  const options = [
-    { label: "Pending", value: "pending" },
-    { label: "Success", value: "success" },
-  ];
+  }, [data, searchTerm, status, currentPage]);
 
   const handleOptionSelect = (selectedOption: string) => {
     setStatus(selectedOption);
@@ -84,11 +83,13 @@ export default function UiTable({
           </div>
         </SearchInputContainer>
         <div className="filter-export-container">
-          <UiFilterDropDown
-            options={options}
-            defaultSelectedValue=""
-            onChange={handleOptionSelect}
-          />
+          {filterOptions && (
+            <UiDropDown
+              options={filterOptions}
+              defaultSelectedValue=""
+              onChange={handleOptionSelect}
+            />
+          )}
           <Export>Export</Export>
         </div>
       </SearchableContainer>
@@ -116,6 +117,18 @@ export default function UiTable({
           })}
         </tbody>
       </Table>
+      <div className="pagination-container">
+        <ReactPaginate
+          previousLabel={<UiIcon icon="ArrowleftIcon" size={20} />}
+          nextLabel={<UiIcon icon="ArrowRightIcon" size={20} />}
+          forcePage={currentPage}
+          pageCount={data.length / postPerPage}
+          onPageChange={Paginate}
+          containerClassName={"pagination"}
+          disabledClassName={"paginate-disabled"}
+          activeClassName={"active"}
+        />
+      </div>
     </TableContainer>
   );
 }
@@ -123,9 +136,46 @@ export default function UiTable({
 const TableContainer = styled.div`
   border: 1px solid var(--color-primary-400);
   background: var(--color-primary-300);
-  min-height: 70vh;
+  height: 450px;
   overflow-x: auto;
   overflow-y: auto;
+
+  .pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 5px;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--color-primary-400);
+  }
+
+  .pagination li {
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+  .pagination li a {
+    display: block;
+    padding: 5px;
+    text-align: center;
+    color: var(--color-primary-150);
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .pagination li.active a {
+    background-color: var(--color-primary-150);
+    color: var(--color-primary-50);
+  }
 `;
 
 const TableTitle = styled.div`
@@ -152,7 +202,8 @@ const SearchInputContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  width: 200px;
+  gap: 10px;
+  right: 10px;
 
   .search-icon-container {
     position: absolute;
@@ -190,7 +241,8 @@ const Export = styled.div`
 
 const Table = styled.table`
   table-layout: fixed;
-  width: 100%;
+  min-width: 100%;
+  width: 900px;
   border-collapse: collapse;
 `;
 
@@ -201,24 +253,25 @@ const TableHeader = styled.thead`
 `;
 
 const TableHeadItem = styled.th`
-  padding: 12px 24px;
+  padding: 12px;
   color: var(--color-gray-100);
   font-size: 14px;
 `;
 
 const TableDataItem = styled.td`
-  padding: 12px 24px;
+  padding: 12px;
   color: var(--color-gray-100);
-  font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
 `;
 
 const TableRow = styled.tr`
   border-bottom: 1px solid var(--color-primary-400);
-  text-align: left;
+  text-align: right;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
   position: relative;
+
+  &:hover {
+    background-color: var(--color-gray-50);
+  }
 `;

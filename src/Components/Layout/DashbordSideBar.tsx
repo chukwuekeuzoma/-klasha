@@ -127,7 +127,7 @@ export default function DashbordSideBar({ menuIsVisible, toggleMenu }: Props) {
               <span>Support</span>
             </Support>
             <HidePanel>
-              <UiIcon icon="Arrowlefticon" size={20} />
+              <UiIcon icon="ArrowleftIcon" size={20} />
               <span>Hide Panel</span>
             </HidePanel>
           </div>

@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { List, X, Question, UserCircle, CaretDown, MagnifyingGlass } from "phosphor-react";
+import { List, X, Question, UserCircle, CaretDown, MagnifyingGlass, CaretLeft, CaretRight} from "phosphor-react";
 
 import {
   Piechart,
-  Arrowleft,
   Group733,
   Wallet,
   DropDown,
@@ -19,7 +18,8 @@ import {
 
 // These icons should be arranged alphabetically for easy sorting
 const icons = {
-  Arrowlefticon: <Arrowleft />,
+  ArrowleftIcon: <CaretLeft />,
+  ArrowRightIcon:<CaretRight />,
   ArrowDownIcon: <CaretDown />,
   AnalyticsIcon: <Group733 />,
   BalanceIcon: <Wallet />,

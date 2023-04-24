@@ -7,7 +7,7 @@ export interface Option {
   value: string;
 }
 
-interface FilterDropdownProps {
+interface DropdownProps {
   options: Option[];
   defaultSelectedValue: string;
   onChange: (selectedValue: string) => void;
@@ -17,7 +17,7 @@ export default function FilterDropdown({
   options,
   defaultSelectedValue,
   onChange,
-}: FilterDropdownProps) {
+}: DropdownProps) {
   const [selectedValue, setSelectedValue] =
     useState<string>(defaultSelectedValue);
   const [isOpen, setIsOpen] = useState<boolean>(false);

@@ -11,7 +11,7 @@ export default function Transactionhistory() {
       query: "source",
     },
     {
-      title: "Customer name",
+      title: "Customer email",
       query: "customer_name",
     },
     {
@@ -32,14 +32,21 @@ export default function Transactionhistory() {
     },
   ];
 
+  const filterOptions = [
+    { label: "All", value: "" },
+    { label: "Pending", value: "pending" },
+    { label: "Success", value: "success" },
+  ];
+
   return (
     <div>
       <UiTable
         data={TransactionHistory}
-        fieldsToSearch={["customer_email, customer_name"]}
+        fieldsToSearch={["customer_name"]}
         isSearchable
         tableTitle="Transaction History"
         headers={headers}
+        filterOptions={filterOptions}
       />
     </div>
   );
