@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { List, X, Question, UserCircle, CaretDown } from "phosphor-react";
+import { List, X, Question, UserCircle, CaretDown, MagnifyingGlass } from "phosphor-react";
 
 import {
   Piechart,
@@ -12,7 +12,6 @@ import {
   Group735,
   Paymentlink,
   Radar,
-  Search,
   Shoppingcart,
   Transactions,
   KlashalogoCheck,
@@ -35,7 +34,7 @@ const icons = {
   PaymentLinksIcon: <Paymentlink />,
   ProfileIcon: <UserCircle />,
   SupportIcon: <Question />,
-  SearchIcon: <Search />,
+  SearchIcon: <MagnifyingGlass  />,
   TransactionIcon: <Group735 />,
   WireIcon: <Transactions />,
   X: <X />,

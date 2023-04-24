@@ -45,7 +45,9 @@ const Body = styled.div`
   overflow-y: scroll;
 
   .body-inner {
+    margin-top: 50px;
     margin-left: 20px;
-    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
   }
 `;

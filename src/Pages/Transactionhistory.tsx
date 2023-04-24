@@ -1,9 +1,46 @@
-import React from 'react';
-
+import UiTable from "../Components/UI/UiTable";
+import { TransactionHistory } from "../data/TarnsactionHistory";
 export default function Transactionhistory() {
-    return (
-        <div>
-           transport
-        </div>
-    );
+  const headers = [
+    {
+      title: "Transaction ID",
+      query: "id",
+    },
+    {
+      title: "Source",
+      query: "source",
+    },
+    {
+      title: "Customer name",
+      query: "customer_name",
+    },
+    {
+      title: "Customer email",
+      query: "customer_email",
+    },
+    {
+      title: "Amount",
+      query: "amount",
+    },
+    {
+      title: "Request date",
+      query: "created_date",
+    },
+    {
+      title: "Status",
+      query: "status",
+    },
+  ];
+
+  return (
+    <div>
+      <UiTable
+        data={TransactionHistory}
+        fieldsToSearch={["customer_email, customer_name"]}
+        isSearchable
+        tableTitle="Transaction History"
+        headers={headers}
+      />
+    </div>
+  );
 }
