@@ -33,37 +33,37 @@ export default function FilterDropdown({
   };
 
   return (
-    <FilterDropdownContainer>
-      <FilterDropdownButton onClick={handleButtonClick}>
+    <DropdownContainer>
+      <DropdownButton onClick={handleButtonClick}>
         <span>
           {selectedValue
             ? options.find((option) => option.value === selectedValue)?.label
             : "Filter"}
         </span>
         <UiIcon icon="FliterIcon" size={10}/>
-      </FilterDropdownButton>
+      </DropdownButton>
       {isOpen && (
-        <FilterDropdownMenu>
+        <DropdownMenu>
           {options.map((option) => (
-            <FilterDropdownMenuItem
+            <DropdownMenuItem
               key={option.value}
               onClick={() => handleMenuItemClick(option.value)}
             >
               {option.label}
-            </FilterDropdownMenuItem>
+            </DropdownMenuItem>
           ))}
-        </FilterDropdownMenu>
+        </DropdownMenu>
       )}
-    </FilterDropdownContainer>
+    </DropdownContainer>
   );
 }
 
-const FilterDropdownContainer = styled.div`
+const DropdownContainer = styled.div`
   display: inline-block;
   position: relative;
 `;
 
-const FilterDropdownButton = styled.div`
+const DropdownButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,7 +81,7 @@ const FilterDropdownButton = styled.div`
   }
 `;
 
-const FilterDropdownMenu = styled.ul`
+const DropdownMenu = styled.ul`
   position: absolute;
   top: 100%;
   left: 0;
@@ -97,7 +97,7 @@ const FilterDropdownMenu = styled.ul`
   font-size: 12px;
 `;
 
-const FilterDropdownMenuItem = styled.li`
+const DropdownMenuItem = styled.li`
   padding: 5px;
   cursor: pointer;
 
