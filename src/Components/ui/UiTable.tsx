@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Option } from "./UiDropDown";
 import UiIcon from "./UiIcon";
 import ReactPaginate from "react-paginate";
+import { CSVLink } from "react-csv";
 
 interface Header {
   title: string;
@@ -90,7 +91,9 @@ export default function UiTable({
               onChange={handleOptionSelect}
             />
           )}
-          <Export>Export</Export>
+          <CSVLink data={sortedData} className="links">
+            <Export>Export</Export>
+          </CSVLink>
         </div>
       </SearchableContainer>
       <Table>
@@ -173,7 +176,7 @@ const TableContainer = styled.div`
   }
 
   .pagination li.active a {
-    background-color: var(--color-primary-150);
+    background-color: var(--color-primary-350);
     color: var(--color-primary-50);
   }
 `;
@@ -221,6 +224,7 @@ const SearchInputContainer = styled.div`
     height: 30px;
     position: relative;
     padding-left: 10px;
+    margin-left: 10px;
   }
 
   input:focus {

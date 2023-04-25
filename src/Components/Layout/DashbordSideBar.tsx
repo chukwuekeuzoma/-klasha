@@ -283,11 +283,6 @@ const HidePanel = styled.div`
   margin-top: 10px;
   cursor: pointer;
 
-  svg {
-    stroke: var(--color-primary-50);
-    fill: var(--color-primary-50);
-  }
-
   span {
     display: block;
     font-size: 12px;
