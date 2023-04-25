@@ -154,7 +154,7 @@ const Sidebar = styled.nav`
     margin-left: 19.36%;
   }
 
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 1400px) {
     position: fixed;
     bottom: 0;
     right: 0;
@@ -168,7 +168,7 @@ const Sidebar = styled.nav`
 `;
 
 const Overlay = styled.div`
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 1400px) {
     ${({ menuIsVisible }: { menuIsVisible: boolean }) =>
       menuIsVisible
         ? `

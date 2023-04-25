@@ -63,12 +63,15 @@ const TopNav = styled.nav`
   .list {
     display: none;
 
-    @media only screen and (max-width: 1200px) {
+    @media only screen and (max-width: 1400px) {
       display: block;
     }
   }
 
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 1400px) {
     justify-content: space-between;
+    position: fixed;
+    left: 0;
+    right: 0;
   }
 `;
