@@ -18,14 +18,14 @@ export default function SalesOverview() {
   const [chartType, setChartType] = useState("7days");
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchChartData(chartType);
+    const fetchData = () => {
+      const data = fetchChartData(chartType);
       setChartData(data);
     };
     fetchData();
   }, [chartType]);
 
-  const fetchChartData = async (type: string) => {
+  const fetchChartData = (type: string) => {
     const labels = Chart.labels;
     const data = Chart.datasets[0].data;
 
@@ -81,7 +81,7 @@ export default function SalesOverview() {
     <>
       <Container>
         <BoxA>
-          <div>Sales overview</div>
+            1
         </BoxA>
         <BoxB>2</BoxB>
         <BoxC>3</BoxC>
@@ -120,14 +120,6 @@ const BoxA = styled.div`
   grid-row: 1/2;
   width: 250px;
   height: 240px;
-  position: relative;
-
-  div {
-    position: absolute;
-    margin-top: -30px;
-    left: 0;
-    top: 0;
-  }
 
   @media only screen and (max-width: 1100px) {
     width: 400px;

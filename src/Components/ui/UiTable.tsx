@@ -35,20 +35,20 @@ export default function UiTable({
 }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [status, setStatus] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
+  const [paginationLevel, setPaginationLevel] = useState(0);
   const [postPerPage] = useState(4);
 
   const paginatedData = useMemo(() => {
-    const start = currentPage * postPerPage;
+    const start = paginationLevel * postPerPage;
     return data.slice(start, start + postPerPage);
-  }, [currentPage, status]);
+  }, [paginationLevel, status]);
 
-  const Paginate = ({ selected }: any) => setCurrentPage(selected);
+  const paginate = ({ selected }: { selected:number }) => setPaginationLevel(selected);
 
   const filteredData = useMemo(() => {
     if (!status) return paginatedData;
     return paginatedData?.filter((data) => data.status === status);
-  }, [status, paginatedData, currentPage]);
+  }, [status, paginatedData, paginationLevel]);
 
   const sortedData = useMemo(() => {
     if (!isSearchable && !searchTerm && !fieldsToSearch) return filteredData;
@@ -60,7 +60,7 @@ export default function UiTable({
         return false;
       });
     });
-  }, [data, searchTerm, status, currentPage]);
+  }, [data, searchTerm, status, paginationLevel]);
 
   const handleOptionSelect = (selectedOption: string) => {
     setStatus(selectedOption);
@@ -124,9 +124,9 @@ export default function UiTable({
         <ReactPaginate
           previousLabel={<UiIcon icon="ArrowleftIcon" size={20} />}
           nextLabel={<UiIcon icon="ArrowRightIcon" size={20} />}
-          forcePage={currentPage}
+          forcePage={paginationLevel}
           pageCount={data.length / postPerPage}
-          onPageChange={Paginate}
+          onPageChange={paginate}
           containerClassName={"pagination"}
           disabledClassName={"paginate-disabled"}
           activeClassName={"active"}
