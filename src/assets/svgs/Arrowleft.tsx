@@ -8,9 +8,9 @@ export default function Arrowleft() {
     >
       <path
         d="M5.99921 11.9984L0.999207 6.99844L5.99921 1.99844"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

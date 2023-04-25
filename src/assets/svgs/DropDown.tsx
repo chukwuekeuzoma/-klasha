@@ -8,9 +8,9 @@ export default function DropDown() {
     >
       <path
         d="M6 10L12 16L18 10"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

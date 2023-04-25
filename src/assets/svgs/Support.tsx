@@ -11,9 +11,9 @@ export default function Support() {
         cx="12"
         cy="12"
         r="10"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
