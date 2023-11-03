@@ -1,7 +1,7 @@
 import React, { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
-const PageError = lazy(() => import("../Components/Errors/PageError"));
+const PageError = lazy(() => import("../Components/errors/PageError"));
 
 // LAYOUTS
 const DashBoardLayout = lazy(() => import("../Layouts/DashBoardLayout"));
