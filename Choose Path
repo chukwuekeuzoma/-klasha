@@ -1,0 +1,236 @@
+//This code is just saved here for reference it do not relate to the App
+
+// import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Input, Select } from '../../../../../../components/Form';
+import { Button } from '../../../../../../components/Elements';
+import logo from '../../../assets/icons/xtern.svg?url';
+
+type Props = {
+  setOnBoardStage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+type Stack = {
+  [key: string]: string[];
+};
+
+export const ChoosePath: React.FC<Props> = ({ setOnBoardStage }) => {
+  const Pathway = ['Devops', 'Software Developer', 'BackEnd Developer', 'FrontEnd Developer'];
+  // const stacks = ['Javascript', 'CSS', 'html', 'TypeScript', 'Node', 'SQL', 'React', 'Vue'];
+
+  const [inputValue, setInputValue] = useState<string>('');
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [customKeys, setCustomKeys] = useState<string[]>([]);
+
+  const stacksTwo: Stack[] = [
+    {
+      node: ['typescript', 'express.js', 'next.js'],
+    },
+    {
+      react: ['javascript', 'tailwind', 'html', 'css'],
+    },
+    {
+      database: ['mongodb', 'postgresql', 'mysql'],
+    },
+    {
+      testing: ['jest', 'mocha', 'chai'],
+    },
+    {
+      versionControl: ['git', 'github', 'gitlab'],
+    },
+    {
+      deployment: ['docker', 'kubernetes', 'nginx'],
+    },
+    {
+      authentication: ['jwt', 'oauth', 'passport.js'],
+    },
+    {
+      devOps: ['aws', 'azure', 'terraform'],
+    },
+  ];
+
+  // Get keys based on the first three letters of input
+  const getMatchingKeys = (): string[] => {
+    return stacksTwo
+      .map((stack) => Object.keys(stack)[0])
+      .filter((key) => {
+        if (inputValue.length >= 3) {
+          return key.substring(0, 3) === inputValue.substring(0, 3);
+        }
+        return false;
+      });
+  };
+
+  // Handle key selection and add custom keys if necessary
+  const handleKeySelect = (key: string) => {
+    if (!selectedKeys.includes(key)) {
+      setSelectedKeys([...selectedKeys, key]);
+    }
+  };
+
+  // Add the custom key if it doesn't match any existing keys
+  const handleAddCustomKey = () => {
+    if (!selectedKeys.includes(inputValue)) {
+      setSelectedKeys([...selectedKeys, inputValue]);
+      setCustomKeys([...customKeys, inputValue]); // Track custom key
+    }
+    setInputValue(''); // Clear the input field
+  };
+
+  // Handle key removal
+  const handleKeyRemove = (key: string) => {
+    setSelectedKeys(selectedKeys.filter((selectedKey) => selectedKey !== key));
+    setSelectedValues(selectedValues.filter((value) => !getRelatedArray(key).includes(value)));
+    setCustomKeys(customKeys.filter((customKey) => customKey !== key)); // Remove from custom keys if it's a custom one
+  };
+
+  // Toggle value selection
+  const handleValueSelect = (value: string) => {
+    if (selectedValues.includes(value)) {
+      // Unselect value if already selected
+      setSelectedValues(selectedValues.filter((selectedValue) => selectedValue !== value));
+    } else {
+      // Select value if not already selected
+      setSelectedValues([...selectedValues, value]);
+    }
+  };
+
+  // Get related values based on all selected keys
+  const getRelatedValues = (): string[] => {
+    const allRelatedValues: string[] = [];
+    selectedKeys.forEach((key) => {
+      const relatedValues = getRelatedArray(key);
+      allRelatedValues.push(...relatedValues);
+    });
+    return allRelatedValues;
+  };
+
+  // Get related values based on selected key
+  const getRelatedArray = (key: string): string[] => {
+    const foundStack = stacksTwo.find((stack) => Object.keys(stack)[0] === key);
+    return foundStack ? foundStack[key] : [];
+  };
+
+  const allSelected = [...selectedKeys, ...selectedValues];
+
+  console.log(allSelected);
+
+  // const navigate = useNavigate();
+  return (
+    <section className="px-[40px] md:px-[80px] xl:px-[140px] py-[90px] bg-white">
+      <img src={logo} alt="xterns" />
+      <h3 className="mt-[40px] text-black text-[22px] md:text-[32px] md:leading-[32px] font-bold">
+        Choose Your Career Path
+      </h3>
+      <p className="mt-[10px] text-[#7A7A7A] text-sm md:text-base md:leading-7 font-[450]">
+        Tell us about your career path and technologies you are familiar with
+      </p>
+      <div className="mt-[30px] space-y-5">
+        <Input label="What's your Profession?" placeholder="enter" />
+        <Select
+          options={[...Pathway.map((types) => ({ value: types, label: types }))]}
+          placeholder="enter"
+          label="Pathways"
+        />
+        {/* <Select
+          options={[...stacks.map((types) => ({ value: types, label: types }))]}
+          placeholder="enter"
+          label="What are your tech stacks?"
+          multiple
+          canSearch
+          chips
+        /> */}
+        <Input
+          type="text"
+          placeholder="Search"
+          label="What are your tech stacks?"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value.toLowerCase())}
+        />
+        <div>
+          {getMatchingKeys().map((key) => (
+            <div
+              key={key}
+              onClick={() => handleKeySelect(key)}
+              className="cursor-pointer mb-2 w-[50%] p-1 rounded-lg shadow-lg bg-white text-black border border-black"
+            >
+              {key}
+            </div>
+          ))}
+        </div>
+
+        {/* Add custom key if not in matching keys */}
+        {inputValue && getMatchingKeys().length === 0 && (
+          <div>
+            <div
+              onClick={handleAddCustomKey}
+              className="cursor-pointer mb-2 w-[50%] p-1 rounded-lg shadow-lg bg-white text-black border border-black"
+            >
+              {inputValue}
+            </div>
+          </div>
+        )}
+
+        {/* Selected Keys */}
+        {selectedKeys.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {selectedKeys.map((key) => (
+              <span
+                key={key}
+                className="flex items-center gap-2 rounded-md bg-gradient-to-r from-gray-300 via-gray-400 to-gray-600 px-3 py-1 text-sm text-white"
+              >
+                <span>{key}</span>
+                <button onClick={() => handleKeyRemove(key)} className="text-white">
+                  &times;
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+
+        {selectedKeys.length > 0 && (
+          <div className="mt-4">
+            <div className="text-[12px] text-[#B1B1B1] font-bold mb-2">
+              Select the tools you know how to use
+            </div>
+            <div className="w-full h-[200px] overflow-y-auto border border-black rounded-lg shadow-lg bg-white p-4">
+              <div className="flex flex-wrap gap-4">
+                {getRelatedValues().map((value) => (
+                  <div key={value} className="cursor-pointer">
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selectedValues.includes(value)}
+                        onChange={() => handleValueSelect(value)}
+                        className="mr-2 cursor-pointer"
+                      />
+                      <span className="text-left">{value}</span>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <Button
+          onClick={() => setOnBoardStage(2)}
+          className="w-full py-2"
+          variant="filled"
+          color="primary"
+        >
+          Next
+        </Button>
+        <Button.Link
+          to="/mentees-auth/onboarding"
+          variant="outlined"
+          color="primary"
+          className="w-full py-2 "
+        >
+          Back
+        </Button.Link>
+      </div>
+    </section>
+  );
+};
